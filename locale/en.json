@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Conversation rendering",
+    "description": "Reduce rendering work for off-screen messages in long conversations.",
+    "detail": "docs/DETAIL.md"
+  }
+}

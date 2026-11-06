@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "会话流畅优化",
+    "description": "减少长会话中屏幕外消息的渲染工作。",
+    "detail": "docs/DETAIL.zh.md"
+  }
+}

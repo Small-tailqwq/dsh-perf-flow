@@ -1,0 +1,12 @@
+/*
+ * Each top-level transcript item renders only while it is near the viewport.
+ * Off-screen items keep their last rendered size (`auto`) and skip style
+ * recalc, layout and paint, so an inherited custom property written on the
+ * conversation root (width drag, composer height) restyles only what is on
+ * screen instead of the whole transcript.
+ */
+[data-conversation-scroll] [data-chat-flow] > [data-chat-flow-key],
+[data-conversation-scroll] [data-chat-flow] > [data-slot] > [data-chat-flow-key] {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
+}
