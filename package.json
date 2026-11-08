@@ -1,9 +1,13 @@
 {
   "name": "@smalltailqwq/dsh-perf-flow",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Reduce rendering work for off-screen conversation items.",
   "icon": "./icon.svg",
   "type": "module",
+  "scripts": {
+    "sync-css": "node scripts/sync-css.mjs",
+    "check": "node scripts/sync-css.mjs --check"
+  },
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",

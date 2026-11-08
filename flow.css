@@ -8,10 +8,32 @@
  * Hidden items are excluded: `hidden="until-found"` relies on the user-agent
  * `content-visibility: hidden` to keep a searchable zero-height box. An author
  * `content-visibility: auto` on the same element wins over that rule and leaves
- * folded rows visible, group headers included.
+ * folded rows visible, group headers included. The size estimates below are
+ * excluded for the same reason: under `content-visibility: hidden` the box
+ * takes its intrinsic size, so an estimate would reopen the folded gap.
+ *
+ * `content-visibility: auto` always implies paint containment, which clips
+ * anything painted outside the item: message actions pulled 6px left for
+ * optical alignment, focus rings, and wide markdown tables that break out to
+ * the transcript edges by up to `(100cqw - column) / 2`. The clip margin
+ * restores that overflow; `cqw` resolves against the transcript scroller.
  */
 [data-conversation-scroll] [data-chat-flow] > [data-chat-flow-key]:not([hidden]),
 [data-conversation-scroll] [data-chat-flow] > [data-slot] > [data-chat-flow-key]:not([hidden]) {
   content-visibility: auto;
-  contain-intrinsic-size: auto 320px;
+  contain-intrinsic-block-size: auto 320px;
+  overflow-clip-margin: 50cqw;
+}
+
+/*
+ * Process rows (tool calls, reasoning, group headers) are one 24px line until
+ * opened. A row that has never rendered, such as history above the initial
+ * scroll position or members of a height-capped process group, would
+ * otherwise reserve 320px each and distort the scroll range.
+ */
+[data-conversation-scroll] [data-chat-flow] > [data-chat-flow-key]:is([data-chat-group-key], [data-turn-process-member]):not([hidden]),
+[data-conversation-scroll] [data-chat-flow] > [data-slot] > [data-chat-flow-key]:is([data-chat-group-key], [data-turn-process-member]):not([hidden]),
+[data-conversation-scroll] [data-chat-flow][data-step-process-content] > [data-chat-flow-key]:not([hidden]),
+[data-conversation-scroll] [data-chat-flow][data-step-process-content] > [data-slot] > [data-chat-flow-key]:not([hidden]) {
+  contain-intrinsic-block-size: auto 24px;
 }
