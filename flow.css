@@ -4,9 +4,14 @@
  * recalc, layout and paint, so an inherited custom property written on the
  * conversation root (width drag, composer height) restyles only what is on
  * screen instead of the whole transcript.
+ *
+ * Hidden items are excluded: `hidden="until-found"` relies on the user-agent
+ * `content-visibility: hidden` to keep a searchable zero-height box. An author
+ * `content-visibility: auto` on the same element wins over that rule and leaves
+ * folded rows visible, group headers included.
  */
-[data-conversation-scroll] [data-chat-flow] > [data-chat-flow-key],
-[data-conversation-scroll] [data-chat-flow] > [data-slot] > [data-chat-flow-key] {
+[data-conversation-scroll] [data-chat-flow] > [data-chat-flow-key]:not([hidden]),
+[data-conversation-scroll] [data-chat-flow] > [data-slot] > [data-chat-flow-key]:not([hidden]) {
   content-visibility: auto;
   contain-intrinsic-size: auto 320px;
 }
